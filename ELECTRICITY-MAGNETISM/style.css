@@ -1,0 +1,400 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  min-height: 100vh;
+  background: #e0f7fa;
+  overflow-x: hidden;
+  color: #333;
+}
+
+
+/* 🌌 Animated Magnetic Background */
+#magneticBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 188, 212, 0.1), transparent 70%),
+              radial-gradient(circle at 70% 70%, rgba(255, 111, 0, 0.1), transparent 70%);
+  overflow: hidden;
+  z-index: -1;
+  animation: magneticFlow 8s ease-in-out infinite alternate;
+}
+
+/* Floating Particles */
+#magneticBackground::before,
+#magneticBackground::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+  background-size: 40px 40px;
+  animation: particleDrift 12s linear infinite;
+  opacity: 0.7;
+}
+
+#magneticBackground::after {
+  animation-delay: -6s;
+  opacity: 0.5;
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #ff7043;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.back-btn:hover {
+  background-color: #ff5722;
+  transform: translateY(-2px);
+}
+
+
+
+@keyframes magneticFlow {
+  0% {
+    background-position: 30% 30%, 70% 70%;
+  }
+  100% {
+    background-position: 35% 35%, 65% 65%;
+  }
+}
+
+@keyframes particleDrift {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(40px, 40px);
+  }
+}
+
+/* Top container */
+.top-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 25px;
+  max-width: 95%;
+  margin: 20px auto;
+}
+
+/* Shared wide-card style */
+.wide-card {
+  background-color: #ffffffcc;
+  padding: 2% 3%;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+/* Info Cards */
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.info-cards h2 {
+  font-size: 1.2rem;
+  color: #0277bd;
+  margin-bottom: 10px;
+}
+
+/* Individual Cards */
+.card {
+  background-color: #fff8dc;
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+/* Info Cards - adjust top to avoid overlapping back button */
+.info-cards.wide-card {
+  margin-top: 70px; /* space to clear the back button (20px button + 50px buffer) */
+}
+
+/* Optional: you can add padding inside container for extra spacing */
+.info-cards.wide-card h2 {
+  margin-bottom: 10px;
+}
+
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.red { background-color: #ff6b6b; }
+.gray { background-color: #b0bec5; }
+.green { background-color: #4caf50; }
+
+/* Polarity Card */
+.polarity-card {
+  margin: 12px 0;
+  background-color: #fff3e0;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  color: #ff7043;
+  font-size: 1rem;
+}
+
+/* Buttons */
+.buttons-card {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#startBtn {
+  background-color: #4fc3f7;
+  color: #fff;
+}
+#startBtn:hover { background-color: #29b6f6; }
+
+#restartBtn {
+  background-color: #ffb74d;
+  color: #fff;
+}
+#restartBtn:hover { background-color: #ffa726; }
+
+/* 🎯 Canvas */
+canvas {
+  display: block;
+  margin: 20px auto 30px auto;
+  background: linear-gradient(to top, #81d4fa, #b3e5fc);
+  border: 4px solid #4fc3f7;
+  border-radius: 15px;
+  width: 95vw;
+  max-width: 1600px;
+  height: 80vh;
+}
+canvas.hide-cursor { cursor: none; }
+
+/* 🧲 Magnet Selector */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.magnet-selector {
+  background-color: #ffffffcc;
+  padding: 9px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 200px;
+}
+.magnet-selector h2 {
+  font-size: 1rem;
+  color: #0277bd;
+  margin-bottom: 10px;
+}
+.magnet-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Magnet choices */
+.magnet-choice {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 4px;
+  width: 80px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.magnet-choice:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+.magnet-choice img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+.magnet-choice.small img { width: 20px; height: 20px; }
+.magnet-choice.medium img { width: 30px; height: 30px; }
+.magnet-choice.large img { width: 40px; height: 40px; }
+.magnet-choice p {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+.magnet-choice.active {
+  border: 2px solid #29b6f6;
+  background-color: #e1f5fe;
+}
+
+/* 🎮 Score Container */
+.score-container {
+  background-color: #ffffffcc;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 220px;
+  margin: 10px auto;
+  text-align: left;
+  max-height: 250px;
+  overflow-y: auto;
+}
+.score-container h2 {
+  font-size: 1rem;
+  color: #0277bd;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Score History */
+.score-history p {
+  margin: 4px 0;
+  font-weight: bold;
+  color: #0277bd;
+  font-size: 0.9rem;
+}
+.score-history p:first-child { color: #ef6c00; }
+
+/* 🧭 Tutorial Container Styling */
+.tutorial-container {
+  background: linear-gradient(145deg, #fdf6e3, #fff8dc);
+  border: 2px solid #ffb347;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.tutorial-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Title */
+.tutorial-container h2 {
+  font-size: 1.3rem;
+  color: #ff7043;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* List Styling — bullets removed */
+.tutorial-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tutorial-container li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  transition: background 0.2s ease;
+}
+.tutorial-container li:hover {
+  background: #ffeab8;
+}
+
+
+#polarity {
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+#polarity:active {
+  transform: scale(1.1);
+}
+
+
+
+/* Footer */
+footer {
+  background-color: #ffffffcc;
+  border-top: 3px solid #4fc3f7;
+  padding: 15px 10px;
+  margin-top: 30px;
+  text-align: center;
+  color: #0277bd;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+footer p { margin: 5px 0; }
+footer .creator { color: #ff7043; font-weight: bold; }
+footer:hover {
+  background-color: #e1f5fe;
+  transition: 0.3s;
+}
+
+/* 📱 Responsive */
+@media screen and (max-width: 768px) {
+  .wide-card { width: 90%; padding: 3%; }
+  .info-cards h2 { font-size: 1rem; }
+  button { font-size: 0.9rem; padding: 0.5rem 1rem; }
+  canvas { width: 95%; height: 60vh; }
+  .score-timer { width: 180px; padding: 10px; }
+  .tutorial-container { width: 90%; }
+}
