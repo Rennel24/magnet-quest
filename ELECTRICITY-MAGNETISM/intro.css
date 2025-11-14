@@ -30,6 +30,7 @@ h1 {
   font-size: 3rem;
   margin-bottom: 50px;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  text-align: center;
 }
 
 /* Buttons container */
@@ -39,8 +40,6 @@ h1 {
   gap: 20px;
   align-items: center;
 }
-
-
 
 /* Buttons styling */
 button {
@@ -67,4 +66,58 @@ button.about {
 
 button.about:hover {
   background-color: #ffa726;
+}
+
+/* Music Control Button - proper small size */
+button.music-control {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 70px;   /* clickable area */
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button.music-control:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+button.music-control img {
+  width: 60%;   /* icon size relative to button */
+  height: 60%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  button.music-control {
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    right: 15px;
+  }
+
+  button.music-control img {
+    width: 70%;
+    height: 70%;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
 }

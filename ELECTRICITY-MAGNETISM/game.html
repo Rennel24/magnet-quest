@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🧲 Magnet Quest</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game.css">
 </head>
 <body>
   <!-- Back Button -->
@@ -43,16 +43,16 @@
     <!-- Middle: HUD -->
     <div class="hud wide-card">
       <h1>🧲 Magnet Quest</h1>
-      <p>Move your mouse to control the magnet. Press <strong>Space</strong> to switch polarity (N/S).</p>
+      <p>Move your mouse to control the magnet. Press.right-panel <strong>Space</strong> to switch polarity (N/S).</p>
 
       <div class="polarity-card">
         Polarity: <span id="polarity">NORTH 🧲</span>
       </div>
 
       <div class="buttons-card">
-        <button id="startBtn">Start Game ▶️</button>
-        <button id="restartBtn">Restart Game 🔄</button>
-        <button id="pauseBtn">Pause ⏸️</button>
+        <button id="startBtn">Start▶️</button>
+        <button id="restartBtn">Restart🔄</button>
+        <button id="pauseBtn">Pause⏸️</button>
       </div>
     </div>
 
@@ -68,7 +68,7 @@
           <img src="assets/images/magnet.png" alt="Medium Magnet">
           <p>Medium Magnet (Normal)</p>
         </div>
-        <div class="magnet-choice large" data-strength="1.0" data-image="magnet3.png">
+        <div class="magnet-choice large" data-st rength="1.0" data-image="magnet3.png">
           <img src="assets/images/magnet.png" alt="Strong Magnet">
           <p>Strong Magnet (Powerful)</p>
         </div>
@@ -83,6 +83,11 @@
         </div>
       </div>
     </div>
+
+    <div>
+        <!--ANOTHER MAGNET HERE SELECT -->
+    </div>
+
   </div>
 
   <!-- 🌌 Animated Magnetic Background -->
@@ -91,13 +96,14 @@
   <!-- Game Canvas -->
   <canvas id="gameCanvas"></canvas>
 
+
   <footer>
     <p>🧲 <strong>Magnet Quest</strong> — A Fun Physics Playground for Learning!</p>
     <p>Created by <span class="creator">HexaHACKS</span> | © 2025 All Rights Reserved</p>
   </footer>
   
   <audio id="bgMusic" src="assets/audio/background.mp3" loop preload="auto"></audio> 
-  <script src="script.js"></script>
+  <script src="game.js"></script>
   <script src="back.js"></script>
 </body>
 </html>

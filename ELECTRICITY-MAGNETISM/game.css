@@ -73,7 +73,6 @@ body {
 }
 
 
-
 @keyframes magneticFlow {
   0% {
     background-position: 30% 30%, 70% 70%;
@@ -163,6 +162,10 @@ body {
 .gray { background-color: #b0bec5; }
 .green { background-color: #4caf50; }
 
+
+/*PUT HOVER EFFECTS HERE*/
+
+
 /* Polarity Card */
 .polarity-card {
   margin: 12px 0;
@@ -174,6 +177,9 @@ body {
   font-size: 1rem;
 }
 
+/* PUT HOVER EFFECTS HERE */
+
+
 /* Buttons */
 .buttons-card {
   display: flex;
@@ -181,10 +187,11 @@ body {
   gap: 15px;
   margin-top: 12px;
   flex-wrap: wrap;
+  
 }
 
 button {
-  padding: 0.6rem 1.2rem;
+  padding: 0.4rem 0.8rem; /* reduced from 0.6rem 1.2rem */
   font-size: 1rem;
   border: none;
   border-radius: 12px;
@@ -192,11 +199,14 @@ button {
   font-weight: bold;
   transition: 0.3s;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 100px; /* optional: sets a consistent smaller width */
+  text-align: center;
 }
 
 #startBtn {
   background-color: #4fc3f7;
   color: #fff;
+  border: none;
 }
 #startBtn:hover { background-color: #29b6f6; }
 
@@ -204,7 +214,10 @@ button {
   background-color: #ffb74d;
   color: #fff;
 }
-#restartBtn:hover { background-color: #ffa726; }
+#restartBtn:hover { 
+  background-color: #ffa726; 
+}
+
 
 /* 🎯 Canvas */
 canvas {
@@ -215,9 +228,12 @@ canvas {
   border-radius: 15px;
   width: 95vw;
   max-width: 1600px;
-  height: 80vh;
+  height: 84vh;
 }
-canvas.hide-cursor { cursor: none; }
+
+canvas.hide-cursor { 
+  cursor: none;
+ }
 
 /* 🧲 Magnet Selector */
 .right-panel {
@@ -238,7 +254,7 @@ canvas.hide-cursor { cursor: none; }
 .magnet-selector h2 {
   font-size: 1rem;
   color: #0277bd;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .magnet-options {
   display: flex;
@@ -269,9 +285,21 @@ canvas.hide-cursor { cursor: none; }
   border-radius: 5px;
   margin-bottom: 2px;
 }
-.magnet-choice.small img { width: 20px; height: 20px; }
-.magnet-choice.medium img { width: 30px; height: 30px; }
-.magnet-choice.large img { width: 40px; height: 40px; }
+
+.magnet-choice.small img { 
+  width: 20px; height: 20px; 
+}
+
+.magnet-choice.medium img { 
+  width: 30px; 
+  height: 30px; 
+}
+
+.magnet-choice.large img { 
+  width: 40px; 
+  height: 40px; 
+}
+
 .magnet-choice p {
   font-size: 0.7rem;
   font-weight: bold;
@@ -371,21 +399,21 @@ canvas.hide-cursor { cursor: none; }
 
 /* Footer */
 footer {
-  background-color: #ffffffcc;
+  background-color: #00a2e2cc;
   border-top: 3px solid #4fc3f7;
   padding: 15px 10px;
   margin-top: 30px;
   text-align: center;
-  color: #0277bd;
+  color: #ffffff;
   font-weight: 500;
   font-size: 1rem;
   border-radius: 15px 15px 0 0;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
 }
 footer p { margin: 5px 0; }
-footer .creator { color: #ff7043; font-weight: bold; }
+footer .creator { color: #643c30; font-weight: bold; }
 footer:hover {
-  background-color: #e1f5fe;
+  background-color: #090a0a;
   transition: 0.3s;
 }
 
