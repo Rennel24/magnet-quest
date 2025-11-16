@@ -10,91 +10,94 @@
   <!-- Back Button -->
   <button id="backBtn" class="back-btn">⬅ EXIT</button>
 
+
+<div class="main-container">
   <!-- Top container with left/right and new magnet selector -->
-  <div class="top-container">
-    <!-- Left: Info Cards -->
-    <div class="info-cards wide-card">
-      <h2>Objects</h2>
-      <div class="card">
-        <div class="circle red"></div>
-        <span>Magnet</span>
-      </div>
-      <div class="card">
-        <div class="circle gray"></div>
-        <span>Metal Box</span>
-      </div>
-      <div class="card">
-        <div class="circle green"></div>
-        <span>Goal Zone</span>
-      </div>
-    </div>
-
-    <!-- Tutorial Section -->
-    <div class="tutorial-container wide-card">
-      <h2>📘 How to Play</h2>
-      <ul>
-        <li>🎯 Drag Magnet.</li>
-        <li>🧲<strong>Space</strong>= flip polarity</li>
-        <li>🏁Reach goal before time runs out</li>
-        <li>⚡ Choose different magnet.</li>
-      </ul>
-    </div>
-
-    <!-- Middle: HUD -->
-    <div class="hud wide-card">
-      <h1>🧲 Magnet Quest</h1>
-      <p>Move your mouse to control the magnet. Press.right-panel <strong>Space</strong> to switch polarity (N/S).</p>
-
-      <div class="polarity-card">
-        Polarity: <span id="polarity">NORTH 🧲</span>
-      </div>
-
-      <div class="buttons-card">
-        <button id="startBtn">Start▶️</button>
-        <button id="restartBtn">Restart🔄</button>
-        <button id="pauseBtn">Pause⏸️</button>
-      </div>
-    </div>
-
-    <!-- Right: Magnet Selector -->
-    <div class="magnet-selector wide-card">
-      <h2>Select Your Magnet</h2>
-      <div class="magnet-options">
-        <div class="magnet-choice small" data-strength="0.3" data-image="magnet1.png">
-          <img src="assets/images/magnet.png" alt="Small Magnet">
-          <p>Small Magnet (Weak)</p>
+    <div class="top-container">
+      <!-- Left: Info Cards -->
+      <div class="info-cards wide-card" id="object-card">
+        <h2>Objects</h2>
+        <div class="card">
+          <div class="circle red"></div>
+          <span>Magnet</span>
         </div>
-        <div class="magnet-choice medium" data-strength="0.6" data-image="magnet2.png">
-          <img src="assets/images/magnet.png" alt="Medium Magnet">
-          <p>Medium Magnet (Normal)</p>
+        <div class="card">
+          <div class="circle gray"></div>
+          <span>Metal</span>
         </div>
-        <div class="magnet-choice large" data-st rength="1.0" data-image="magnet3.png">
-          <img src="assets/images/magnet.png" alt="Strong Magnet">
-          <p>Strong Magnet (Powerful)</p>
+        <div class="card">
+          <div class="circle green"></div>
+          <span>Goal Zone</span>
         </div>
       </div>
 
-      <div class="score-container">
-        <div class="score-timer">
-          <h2>Game Stats</h2>
-          <div class="stats">
-            <p><strong>Score:</strong> <span id="score">0</span></p>
+      <!-- Tutorial Section -->
+      <div class="tutorial-container wide-card">
+        <h2>How to Play</h2>
+        <ul>
+          <li>🎯 Drag Magnet.</li>
+          <li>🧲<strong>Space</strong>= flip polarity</li>
+          <li>🏁Reach goal before time runs out</li>
+          <li>⚡ Choose different magnet.</li>
+        </ul>
+      </div>
+
+      <!-- Middle: HUD -->
+      <div class="hud wide-card">
+        <p>Move your mouse to control the magnet. Press.right-panel <strong>Space</strong> to switch polarity (N/S).</p>
+
+        <div class="polarity-card">
+          Polarity: <span id="polarity">NORTH 🧲</span>
+        </div>
+
+        <div class="buttons-card">
+          <button id="startBtn">Start</button>
+          <button id="restartBtn">Restart</button>
+          <button id="pauseBtn">Pause</button>
+        </div>
+      </div>
+
+      <!-- Right: Magnet Selector -->
+      <div class="magnet-selector wide-card">
+        <h2>Select Your Magnet</h2>
+        <div class="magnet-options">
+          <div class="magnet-choice small" data-strength="0.3" data-image="magnet1.png">
+            <img src="assets/images/magnet.png" alt="Small Magnet">
+            <p>Small Magnet (Weak)</p>
+          </div>
+          <div class="magnet-choice medium" data-strength="0.6" data-image="magnet2.png">
+            <img src="assets/images/magnet.png" alt="Medium Magnet">
+            <p>Medium Magnet (Normal)</p>
+          </div>
+          <div class="magnet-choice large" data-st rength="1.0" data-image="magnet3.png">
+            <img src="assets/images/magnet.png" alt="Strong Magnet">
+            <p>Strong Magnet (Powerful)</p>
+          </div>
+        </div>
+
+        <div class="score-container">
+          <div class="score-timer">
+            <h2>Game Stats</h2>
+            <div class="stats">
+              <p><strong>Score:</strong> <span id="score">0</span></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div>
-        <!--ANOTHER MAGNET HERE SELECT -->
-    </div>
 
-  </div>
+
+    </div>
 
   <!-- 🌌 Animated Magnetic Background -->
   <div id="magneticBackground"></div>
 
   <!-- Game Canvas -->
-  <canvas id="gameCanvas"></canvas>
+
+  
+    <canvas id="gameCanvas"></canvas>
+  </div>
+      
 
 
   <footer>

@@ -516,6 +516,44 @@ ctx.restore();
     ctx.restore();
   }
 
+  canvas.addEventListener("touchmove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  mouse.x = touch.clientX - rect.left;
+  mouse.y = touch.clientY - rect.top;
+  e.preventDefault();
+});
+
+canvas.addEventListener("touchstart", () => {
+  isMouseDown = true;
+});
+
+canvas.addEventListener("touchend", () => {
+  isMouseDown = false;
+});
+
+document.getElementById("mobilePolarityBtn").addEventListener("touchstart", () => {
+  if (gameRunning && !isPaused) {
+    magnet.polarity *= -1;
+    const polarityText = document.getElementById("polarity");
+
+    if (magnet.polarity === 1) {
+      polarityText.textContent = "NORTH 🧲";
+      polarityText.style.color = "#ff5252";
+      targetGlowColor = "rgba(255, 82, 82, 0.8)";
+    } else {
+      polarityText.textContent = "SOUTH 🧊";
+      polarityText.style.color = "#42a5f5";
+      targetGlowColor = "rgba(66, 165, 245, 0.8)";
+    }
+  }
+});
+if (window.innerWidth < 768) {
+  canvas.height = window.innerHeight * 0.65;
+}
+canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+
   particles.forEach((p, i) => { p.update(); p.draw(ctx); if (p.life <= 0) particles.splice(i, 1); });
 
   const distToGoal = Math.sqrt((metal.x - goal.x) ** 2 + (metal.y - goal.y) ** 2);
@@ -523,3 +561,5 @@ ctx.restore();
 
   animationFrame = requestAnimationFrame(animate);
 }
+
+

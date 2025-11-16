@@ -121,3 +121,105 @@ button.music-control img {
     font-size: 1rem;
   }
 }
+
+/* 📱 MOBILE & TABLET RESPONSIVE FIXES */
+@media screen and (max-width: 1024px) {
+
+  /* Main layout becomes vertical */
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 90px;
+    border: none;
+  }
+
+  /* Left sidebar (top-container) becomes full width */
+  .top-container {
+    width: 95%;
+    max-width: none;
+    height: auto;
+    overflow-y: visible;
+    border: none;
+  }
+
+  /* Cards inside sidebar */
+  .top-container > .wide-card {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Canvas adjusts to screen */
+  canvas {
+    width: 95vw !important;
+    height: 55vh !important;
+    margin: 10px 0;
+  }
+
+  /* Right Panel (magnet & score) */
+  .right-panel {
+    width: 100%;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Magnet selector */
+  .magnet-selector {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+  }
+
+  .magnet-options {
+    gap: 15px;
+  }
+
+  .magnet-choice {
+    width: 70px;
+  }
+
+  /* Score Container */
+  .score-container {
+    width: 80%;
+    max-height: none;
+  }
+
+  /* Buttons */
+  button {
+    width: 45%;
+    min-width: 130px;
+    font-size: 1rem;
+  }
+
+  .buttons-card {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* Tutorial Container */
+  .tutorial-container {
+    width: 95%;
+  }
+}
+
+/* 📱 SMALL PHONES (≤ 480px) */
+@media screen and (max-width: 480px) {
+
+  button {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .magnet-choice {
+    width: 60px;
+  }
+
+  canvas {
+    height: 45vh !important;
+  }
+
+  .score-container,
+  .magnet-selector {
+    width: 95%;
+  }
+}

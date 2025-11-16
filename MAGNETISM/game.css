@@ -1,4 +1,3 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -27,6 +26,15 @@ body {
   overflow: hidden;
   z-index: -1;
   animation: magneticFlow 8s ease-in-out infinite alternate;
+}
+
+.main-container{
+ border: solid;
+ border: solid pink;
+ display: flex;
+ margin-top:60px;
+ align-items: start;
+ height: auto;
 }
 
 /* Floating Particles */
@@ -94,24 +102,31 @@ body {
 /* Top container */
 .top-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 25px;
-  max-width: 95%;
-  margin: 20px auto;
+  flex-direction: column;
+  gap: 10px;
+  width: 20%;
+  max-width: 40%;
+  padding: 5px;
+  border: solid;
+  box-sizing: border-box;
+  /* optional: remove height restriction */
+  height: 600px;
+  overflow-y: scroll; /* hide overflow of top-container itself */
 }
 
-/* Shared wide-card style */
-.wide-card {
+/* Fix inner wide-card heights */
+.top-container > .wide-card {
+  flex: none;             /* disables flex growth */
+  height: 300px;          /* fixed height */
+        /* scroll if content overflows */
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   background-color: #ffffffcc;
-  padding: 2% 3%;
-  border-radius: 15px;
-  width: 350px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  flex: 1 1 300px;
-  min-width: 280px;
 }
+
+
+
 
 /* Info Cards */
 .info-cards {
@@ -127,9 +142,14 @@ body {
   margin-bottom: 10px;
 }
 
+#object-card{
+
+   height: 200px;
+
+}
 /* Individual Cards */
 .card {
-  background-color: #fff8dc;
+  background-color: #8febf1;
   border-radius: 12px;
   padding: 8px 12px;
   display: flex;
@@ -151,6 +171,9 @@ body {
   margin-bottom: 10px;
 }
 
+.hud.wide-card p {
+  font-size: 15px;    /* example font size */
+}
 
 .circle {
   width: 20px;
@@ -219,6 +242,7 @@ button {
 }
 
 
+
 /* 🎯 Canvas */
 canvas {
   display: block;
@@ -226,9 +250,10 @@ canvas {
   background: linear-gradient(to top, #81d4fa, #b3e5fc);
   border: 4px solid #4fc3f7;
   border-radius: 15px;
-  width: 95vw;
+  width: 90vw;
   max-width: 1600px;
   height: 84vh;
+  margin-right: 50px;
 }
 
 canvas.hide-cursor { 
@@ -250,6 +275,7 @@ canvas.hide-cursor {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center;
   width: 200px;
+  height: 200px;
 }
 .magnet-selector h2 {
   font-size: 1rem;
@@ -317,7 +343,7 @@ canvas.hide-cursor {
   padding: 12px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  width: 220px;
+  width: 180px;
   margin: 10px auto;
   text-align: left;
   max-height: 250px;
@@ -425,4 +451,32 @@ footer:hover {
   canvas { width: 95%; height: 60vh; }
   .score-timer { width: 180px; padding: 10px; }
   .tutorial-container { width: 90%; }
+}
+
+
+/* 📱 TABLET & MOBILE */
+@media screen and (max-width: 1024px) {
+  canvas {
+    width: 95vw !important;
+    height: 50vh !important;   /* smaller for tablets */
+    margin: 10px 0;
+  }
+}
+
+/* 📱 SMALL PHONES (≤ 480px) */
+@media screen and (max-width: 480px) {
+  canvas {
+    width: 70vw !important;
+    height: 70vh !important;   /* much smaller on phones */
+  }
+}
+/* 📱 Mobile (≤ 768px) — make top-container wider */
+@media screen and (max-width: 768px) {
+  .top-container {
+    width: 40% !important;      /* increase width */
+    max-width: 40% !important;  /* override previous max-width */
+    height: auto;               /* allow natural height */
+    overflow-y: visible;        /* remove scrolling box */
+    margin: 0 auto;             /* center it */
+  }
 }
