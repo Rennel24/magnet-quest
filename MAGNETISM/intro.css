@@ -69,33 +69,57 @@ button.about:hover {
 }
 
 /* Music Control Button - proper small size */
-button.music-control {
+/* 🎵 Toggle Switch Container */
+.music-toggle {
   position: absolute;
   top: 20px;
   right: 30px;
-  width: 70px;   /* clickable area */
-  height: 70px;
-  border-radius: 50%;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 60px;
+  height: 30px;
+  display: inline-block;
+}
+
+.music-toggle input {
+  opacity: 0; /* Hide actual checkbox */
+  width: 0;
+  height: 0;
+}
+
+/* Slider Background */
+.slider {
+  position: absolute;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: background-color 0.3s, transform 0.3s;
+  background-color: #ccc;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
 }
 
-button.music-control:hover {
-  background-color: rgba(255, 255, 255, 1);
-  transform: translateY(-2px);
+/* Slider Knob */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
 }
 
-button.music-control img {
-  width: 60%;   /* icon size relative to button */
-  height: 60%;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+/* When toggle is ON */
+input:checked + .slider {
+  background-color: #4caf50;
 }
+
+input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {

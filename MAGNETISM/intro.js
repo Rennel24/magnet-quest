@@ -6,7 +6,7 @@ bgMusic.volume = 0.4;
 // Play music when page loads
 window.addEventListener('DOMContentLoaded', () => {
   bgMusic.play().catch(() => {
-    console.log("Autoplay prevented. Click a button to play music.");
+    console.log("Autoplay blocked—user must interact first.");
   });
 });
 
@@ -21,24 +21,16 @@ document.getElementById('aboutBtn').addEventListener('click', () => {
   window.location.href = "about.html";
 });
 
-// Music button toggle
-const musicBtn = document.getElementById('musicBtn');
-const musicIcon = document.getElementById('musicIcon');
-let musicPlaying = true;
+// 🎵 Music Toggle Switch
+const musicSwitch = document.getElementById('musicSwitch');
 
-musicBtn.addEventListener('click', () => {
-  if (musicPlaying) {
-    bgMusic.pause();
-    musicIcon.src = 'assets/images/music_off.png';
-  } else {
+// Toggle ON/OFF
+musicSwitch.addEventListener('change', () => {
+  if (musicSwitch.checked) {
     bgMusic.play().catch(() => {});
-    musicIcon.src = 'assets/images/music_on.png';
+  } else {
+    bgMusic.pause();
   }
-  musicPlaying = !musicPlaying;
-
-  // Add a small rotation animation
-  musicIcon.style.transform = 'rotate(360deg)';
-  setTimeout(() => { musicIcon.style.transform = 'rotate(0deg)'; }, 300);
 });
 
 // Stop music helper

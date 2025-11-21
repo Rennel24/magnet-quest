@@ -32,9 +32,11 @@ body {
  border: solid;
  border: solid pink;
  display: flex;
+ justify-content:left;
  margin-top:60px;
  align-items: start;
  height: auto;
+ gap:0;
 }
 
 /* Floating Particles */
@@ -99,20 +101,23 @@ body {
   }
 }
 
-/* Top container */
 .top-container {
   display: flex;
+  justify-content: first baseline;
   flex-direction: column;
-  gap: 10px;
-  width: 20%;
-  max-width: 40%;
+  gap: 8px;
+  width: 18%;            /* you can increase this freely */
+  max-width: 35%;
   padding: 5px;
-  border: solid;
+  border: solid yellow;
   box-sizing: border-box;
-  /* optional: remove height restriction */
-  height: 600px;
-  overflow-y: scroll; /* hide overflow of top-container itself */
+  height: 500px;
+  overflow-y: scroll;
+  flex-shrink: 0;        /* ❗ prevents top-container from forcing canvas to shrink */
+  padding-top: 0;
+ 
 }
+
 
 /* Fix inner wide-card heights */
 .top-container > .wide-card {
@@ -241,19 +246,27 @@ button {
   background-color: #ffa726; 
 }
 
-
+#gameCanvas {
+  margin: 0;
+  padding: 0;
+  display: block;
+  flex: 1;
+}
 
 /* 🎯 Canvas */
 canvas {
   display: block;
-  margin: 20px auto 30px auto;
+  margin: 10px 30px 30px auto;
   background: linear-gradient(to top, #81d4fa, #b3e5fc);
   border: 4px solid #4fc3f7;
   border-radius: 15px;
   width: 90vw;
-  max-width: 1600px;
-  height: 84vh;
-  margin-right: 50px;
+  max-width: 1050px;
+  height: 100vh;
+  
+  
+ 
+
 }
 
 canvas.hide-cursor { 
@@ -275,7 +288,14 @@ canvas.hide-cursor {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center;
   width: 200px;
-  height: 200px;
+  height: auto;
+  
+}
+
+
+#magnet-select{
+
+  max-height: 240px;
 }
 .magnet-selector h2 {
   font-size: 1rem;
@@ -337,6 +357,101 @@ canvas.hide-cursor {
   background-color: #e1f5fe;
 }
 
+
+/* 🔵 Object Selector Container */
+.object-selector {
+  background-color: #ffffffcc;
+  padding: 15px;
+  border-radius: 14px;
+  margin-top: 15px;
+  width: 100%;
+  min-height: 390px;   /* ⬆ from 260 → 340 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+/* Title */
+.object-selector h2 {
+  font-size: 1.1rem;
+  color: #ff7043;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Object choices grid */
+.object-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 3 per row */
+  gap: 10px;
+  width: 100%;
+  padding: 5px;
+}
+
+/* Individual Object Card */
+.object-choice {
+  background: #fefefe;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  height: 82px;           /* ⬆ Perfect sized card */
+}
+
+.object-choice img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.object-choice p {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+/* Hover & Active */
+.object-choice:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+.object-choice.active {
+  border: 2px solid #ff9800;
+  background-color: #fff4e1;
+}
+
+/* Status indicator */
+.object-status {
+  margin-top: 5px;
+  padding: 8px;
+  background: #fff8e0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #ff9800;
+  border: 1px solid #ffd391;
+}
+/* Center last item in grid if odd number of items */
+.object-choice:last-child {
+  grid-column: 1 / -1;     /* Make it span the whole row */
+  justify-self: center;    /* Center it horizontally */
+  width: 60%;              /* Adjust size so it doesn’t stretch too wide */
+}
+
+
+
 /* 🎮 Score Container */
 .score-container {
   background-color: #ffffffcc;
@@ -346,9 +461,11 @@ canvas.hide-cursor {
   width: 180px;
   margin: 10px auto;
   text-align: left;
-  max-height: 250px;
-  overflow-y: auto;
+  
+  max-height: none;
 }
+
+
 .score-container h2 {
   font-size: 1rem;
   color: #0277bd;
@@ -441,42 +558,4 @@ footer .creator { color: #643c30; font-weight: bold; }
 footer:hover {
   background-color: #090a0a;
   transition: 0.3s;
-}
-
-/* 📱 Responsive */
-@media screen and (max-width: 768px) {
-  .wide-card { width: 90%; padding: 3%; }
-  .info-cards h2 { font-size: 1rem; }
-  button { font-size: 0.9rem; padding: 0.5rem 1rem; }
-  canvas { width: 95%; height: 60vh; }
-  .score-timer { width: 180px; padding: 10px; }
-  .tutorial-container { width: 90%; }
-}
-
-
-/* 📱 TABLET & MOBILE */
-@media screen and (max-width: 1024px) {
-  canvas {
-    width: 95vw !important;
-    height: 50vh !important;   /* smaller for tablets */
-    margin: 10px 0;
-  }
-}
-
-/* 📱 SMALL PHONES (≤ 480px) */
-@media screen and (max-width: 480px) {
-  canvas {
-    width: 70vw !important;
-    height: 70vh !important;   /* much smaller on phones */
-  }
-}
-/* 📱 Mobile (≤ 768px) — make top-container wider */
-@media screen and (max-width: 768px) {
-  .top-container {
-    width: 40% !important;      /* increase width */
-    max-width: 40% !important;  /* override previous max-width */
-    height: auto;               /* allow natural height */
-    overflow-y: visible;        /* remove scrolling box */
-    margin: 0 auto;             /* center it */
-  }
 }
