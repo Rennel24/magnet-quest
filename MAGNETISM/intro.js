@@ -1,42 +1,58 @@
 // 🎵 Load background music
-const bgMusic = new Audio('assets/sounds/intro_music.mp3');
+const bgMusic = new Audio('music.mp3');
 bgMusic.loop = true;
 bgMusic.volume = 0.4;
 
-// Play music when page loads
-window.addEventListener('DOMContentLoaded', () => {
-  bgMusic.play().catch(() => {
-    console.log("Autoplay blocked—user must interact first.");
-  });
-});
-
 // Buttons
-document.getElementById('startBtn').addEventListener('click', () => {
-  stopMusic();
-  window.location.href = "game.html";
-});
+const startBtn = document.getElementById('startBtn');
+const aboutBtn = document.getElementById('aboutBtn');
 
-document.getElementById('aboutBtn').addEventListener('click', () => {
-  stopMusic();
-  window.location.href = "about.html";
-});
-
-// 🎵 Music Toggle Switch
+// Toggle switch
 const musicSwitch = document.getElementById('musicSwitch');
 
-// Toggle ON/OFF
+// Default state = OFF
+musicSwitch.checked = false;
+
+
+function unlockAudio() {
+  bgMusic.play().then(() => {
+      bgMusic.pause();          // unlock but stay OFF
+      bgMusic.currentTime = 0;
+      console.log("Audio unlocked");
+  }).catch(() => {});
+
+  window.removeEventListener("click", unlockAudio);
+}
+
+window.addEventListener("click", unlockAudio);
+
+/* 
+--------------------------
+ 🎚 Toggle Music ON / OFF
+--------------------------
+*/
 musicSwitch.addEventListener('change', () => {
   if (musicSwitch.checked) {
     bgMusic.play().catch(() => {});
   } else {
     bgMusic.pause();
+    bgMusic.currentTime = 0;
   }
 });
 
-// Stop music helper
-function stopMusic() {
-  if (!bgMusic.paused) {
-    bgMusic.pause();
-    bgMusic.currentTime = 0;
-  }
-}
+/* 
+--------------------------
+ ▶ Start / About Buttons
+--------------------------
+*/
+startBtn.addEventListener('click', () => {
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+  window.location.href = "game.html";
+});
+
+aboutBtn.addEventListener('click', () => {
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+  window.location.href = "about.html";
+});

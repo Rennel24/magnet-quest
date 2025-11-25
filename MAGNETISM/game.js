@@ -295,6 +295,77 @@ function blendColors(color1, color2, factor) {
   return `rgba(${result[0]}, ${result[1]}, ${result[2]}, 0.8)`;
 }
 
+// ---------------- IMPROVED ATTRACTION & REPULSION ----------------
+// ---------------- IMPROVED ATTRACTION SYSTEM ----------------
+const dx = metal.x - magnet.x;
+const dy = metal.y - magnet.y;
+const distance = Math.sqrt(dx*dx + dy*dy) || 0.0001;
+
+// Attraction radius based on magnet size
+let effectiveRange =
+    selectedMagnet.displaySize === 25 ? 180 :     // small
+    selectedMagnet.displaySize === 30 ? 230 :     // medium
+    300;                                          // large
+
+// Attraction only inside range
+if (distance < effectiveRange) {
+
+    // Prevent overly strong force when metal is too close
+    const minSafe =
+        selectedMagnet.displaySize === 25 ? 55 :
+        selectedMagnet.displaySize === 30 ? 40 :
+        30;
+
+    // Smooth attraction: prevents snapping when very close
+    const attractionFactor = Math.max(0, (distance - minSafe) / distance);
+
+    // Realistic force drop-off curve
+    const force =
+        magnetStrength *
+        attractionFactor *
+        (1 / Math.pow(distance, 0.55));
+
+    const fx = (-dx / distance) * force * magnet.polarity;
+    const fy = (-dy / distance) * force * magnet.polarity;
+
+    metal.vx += fx;
+    metal.vy += fy;
+
+    if (Math.random() < 0.25)
+        particles.push(new Particle(metal.x, metal.y, "#ffcc00", 3, 25));
+
+    if (pullSound.paused) {
+        pullSound.currentTime = 0;
+        pullSound.play().catch(()=>{});
+    }
+} else {
+    if (!pullSound.paused) {
+        pullSound.pause();
+        pullSound.currentTime = 0;
+    }
+}
+
+
+// ---------------- VELOCITY INTEGRATION ----------------
+metal.vx *= 0.96;
+metal.vy *= 0.96;
+metal.x += metal.vx;
+metal.y += metal.vy;
+
+// ---------------- CLAMP MAGNET ----------------
+magnet.x = Math.min(Math.max(magnet.radius / 2, magnet.x), canvas.width - magnet.radius / 2);
+magnet.y = Math.min(Math.max(magnet.radius / 2, magnet.y), canvas.height - magnet.radius / 2);
+
+// ---------------- EDGE COLLISION FOR METAL ----------------
+if (metal.x - metal.radius < 0) { metal.x = metal.radius; metal.vx *= -0.8; }
+if (metal.x + metal.radius > canvas.width) { metal.x = canvas.width - metal.radius; metal.vx *= -0.8; }
+if (metal.y - metal.radius < 0) { metal.y = metal.radius; metal.vy *= -0.8; }
+if (metal.y + metal.radius > canvas.height) { metal.y = canvas.height - metal.radius; metal.vy *= -0.8; }
+
+// ---------------- GOAL GLOW ----------------
+goalGlowPhase += goalGlowSpeed;
+const glowAlpha = 0.3 + 0.15 * Math.sin(goalGlowPhase * 2 * Math.PI);
+
 // --------------------------- Score History ---------------------------
 const scoreContainer = document.querySelector(".score-container");
 const scoreHistoryContainer = document.createElement("div");
@@ -454,18 +525,36 @@ function animate() {
   waves.forEach(w => { w.update(); w.draw(ctx, canvas.width, canvas.height); });
 
   // HUD text
-  ctx.fillStyle = "#0277bd";
-  ctx.font = "bold 24px Poppins";
-  ctx.textAlign = "left";
-  ctx.fillText(`Score: ${score}`, 20, 40);
-  ctx.fillText(`Time: ${timeLeft}s`, 20, 70);
+  ctx.save();
+ctx.globalAlpha = 0.9;
+ctx.fillStyle = "#0277bd";
+ctx.font = "700 26px Poppins";
+ctx.textAlign = "left";
 
-  if (timeUpShown) {
-    ctx.fillStyle = "rgba(255,0,0,0.7)";
-    ctx.font = "bold 60px Poppins";
-    ctx.textAlign = "center";
-    ctx.fillText("⏰ TIME'S UP!", canvas.width / 2, canvas.height / 2);
-  }
+ctx.shadowColor = "rgba(2, 119, 189, 0.6)";
+ctx.shadowBlur = 8;
+
+ctx.fillText(`Score: ${score}`, 20, 40);
+ctx.fillText(`Time: ${timeLeft}s`, 20, 70);
+
+ctx.restore();
+
+// TIME'S UP animation
+if (timeUpShown) {
+  const pulse = 0.5 + 0.5 * Math.sin(Date.now() * 0.005); // pulsing effect
+  ctx.save();
+  ctx.globalAlpha = pulse;
+
+  ctx.fillStyle = "rgba(255, 0, 0, 0.9)";
+  ctx.font = "bold 70px Poppins";
+  ctx.textAlign = "center";
+  ctx.shadowColor = "rgba(255,0,0,1)";
+  ctx.shadowBlur = 25;
+
+  ctx.fillText("TIME'S UP!", canvas.width / 2, canvas.height / 2);
+
+  ctx.restore();
+}
 
   // Magnet follows pointer while mouse/touch is down
   if (isMouseDown) {
@@ -475,34 +564,61 @@ function animate() {
   }
 
   // Attraction physics
-  const dx = metal.x - magnet.x;
-  const dy = metal.y - magnet.y;
-  const distance = Math.sqrt(dx * dx + dy * dy) || 0.0001; // avoid div by zero
-  const withinRange = distance < MAX_ATTRACTION_DISTANCE;
+// ----- IMPROVED MAGNET ATTRACTION BASED ON SIZE -----
 
-  if (withinRange) {
-    const forceStrength = magnetStrength / Math.max(distance, 50);
-    const fx = (-dx / distance) * forceStrength * 0.06 * magnet.polarity;
-    const fy = (-dy / distance) * forceStrength * 0.06 * magnet.polarity;
-    metal.vx += fx;
-    metal.vy += fy;
+// distance between magnet and object
+const dx = metal.x - magnet.x;
+const dy = metal.y - magnet.y;
+const distance = Math.sqrt(dx * dx + dy * dy) || 0.0001;
 
-    if (Math.random() < 0.3) particles.push(new Particle(metal.x, metal.y, "#ffcc00", 3, 25));
+// attraction range based on magnet size
+let attractionRange =
+  selectedMagnet.displaySize === 25 ? 180 :   // small magnet
+  selectedMagnet.displaySize === 30 ? 230 :   // medium magnet
+  300;                                        // large magnet
 
-    if (pullSound.paused) {
-      pullSound.currentTime = 0;
-      pullSound.play().catch(() => {});
-    }
-  } else {
-    if (!pullSound.paused) {
-      pullSound.pause();
-      pullSound.currentTime = 0;
-    }
+const withinRange = distance < attractionRange;
+
+if (withinRange) {
+
+  // force based on size + strength + distance
+  const forceStrength =
+    (magnetStrength * selectedMagnet.strengthMultiplier) /
+    Math.max(distance, 60);
+
+  const fx = (-dx / distance) * forceStrength * 0.06 * magnet.polarity;
+  const fy = (-dy / distance) * forceStrength * 0.06 * magnet.polarity;
+
+  metal.vx += fx;
+  metal.vy += fy;
+
+  // pull particles
+  if (Math.random() < 0.25) {
+    particles.push(new Particle(metal.x, metal.y, "#ffcc00", 3, 25));
   }
 
-  // Integrate metal velocity
-  metal.vx *= 0.96; metal.vy *= 0.96;
-  metal.x += metal.vx; metal.y += metal.vy;
+  // play pull sound
+  if (pullSound.paused) {
+    pullSound.currentTime = 0;
+    pullSound.play().catch(() => {});
+  }
+
+} else {
+
+  // stop sound when out of range
+  if (!pullSound.paused) {
+    pullSound.pause();
+    pullSound.currentTime = 0;
+  }
+
+}
+
+// integrate object movement
+metal.vx *= 0.96;
+metal.vy *= 0.96;
+metal.x += metal.vx;
+metal.y += metal.vy;
+
 
   // clamp magnet inside canvas
   magnet.x = Math.min(Math.max(magnet.radius / 2, magnet.x), canvas.width - magnet.radius / 2);
@@ -546,7 +662,12 @@ function animate() {
   if (magnetImg) {
     ctx.save();
     ctx.shadowColor = currentGlowColor;
-    ctx.shadowBlur = 30;
+    ctx.shadowBlur = 40;
+    let glowScale =
+    selectedMagnet.displaySize === 25 ? 25 :
+    selectedMagnet.displaySize === 30 ? 40 :
+    60;
+
     ctx.drawImage(
       magnetImg,
       magnet.x - magnet.radius,

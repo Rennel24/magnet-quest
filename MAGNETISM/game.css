@@ -13,6 +13,30 @@ body {
   color: #333;
 }
 
+#mg-quest-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.magnet-quest {
+  font-family: 'Poppins', sans-serif;
+  font-size: 60px;
+  font-weight: 900;
+  color: #ff2d55;
+  letter-spacing: 4px;
+  text-shadow:
+    3px 3px 0 #fff,
+    6px 6px 0 rgba(0,0,0,0.3);
+  animation: bounceTitle 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceTitle {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-12px); }
+  60% { transform: translateY(0); }
+  80% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
 
 /* 🌌 Animated Magnetic Background */
 #magneticBackground {
@@ -29,8 +53,6 @@ body {
 }
 
 .main-container{
- border: solid;
- border: solid pink;
  display: flex;
  justify-content:left;
  margin-top:60px;
@@ -109,7 +131,6 @@ body {
   width: 18%;            /* you can increase this freely */
   max-width: 35%;
   padding: 5px;
-  border: solid yellow;
   box-sizing: border-box;
   height: 500px;
   overflow-y: scroll;
